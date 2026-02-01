@@ -18,20 +18,20 @@ namespace JapaneseCarpartsStore.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int? brandId, int? modelId)
+        public async Task<IActionResult> Index(int? selectedBrandId, int? selectedModelId)
         {
             var viewModel = new HomeIndexViewModel();
 
-            //1 - Load Brands for the first dropdown
-            viewModel.Brands = new SelectList(_context.Brands, "Id", "Name", brandId);
-            viewModel.SelectedBrandId = brandId;
-            viewModel.SelectedModelId = modelId;
+            // 1 - Load Brands
+            viewModel.Brands = new SelectList(_context.Brands, "Id", "Name", selectedBrandId);
+            viewModel.SelectedBrandId = selectedBrandId;
+            viewModel.SelectedModelId = selectedModelId;
 
-            //2 - If a Brand is selected, load its Models
-            if (brandId.HasValue)
+            // 2 - If a Brand is selected, load its Models
+            if (selectedBrandId.HasValue)
             {
                 var models = await _context.VehicleModels
-                    .Where(m => m.BrandId == brandId.Value)
+                    .Where(m => m.BrandId == selectedBrandId.Value)
                     .Select(m => new
                     {
                         Id = m.Id,
@@ -39,13 +39,13 @@ namespace JapaneseCarpartsStore.Controllers
                     })
                     .ToListAsync();
 
-                viewModel.VehicleModels = new SelectList(models, "Id", "DisplayText", modelId);
+                viewModel.VehicleModels = new SelectList(models, "Id", "DisplayText", selectedModelId);
             }
 
-            //3 - If a Model is selected, load its Parts
-            if (modelId.HasValue)
+            // 3 - If a Model is selected, load its Parts and Image
+            if (selectedModelId.HasValue)
             {
-                var selectedModel = await _context.VehicleModels.FindAsync(modelId.Value);
+                var selectedModel = await _context.VehicleModels.FindAsync(selectedModelId.Value);
                 if (selectedModel != null)
                 {
                     ViewData["SelectedModelImage"] = selectedModel.ImageUrl;
@@ -54,7 +54,7 @@ namespace JapaneseCarpartsStore.Controllers
 
                 viewModel.Parts = await _context.Parts
                     .Include(p => p.VehicleModel)
-                    .Where(p => p.VehicleModelId == modelId.Value)
+                    .Where(p => p.VehicleModelId == selectedModelId.Value)
                     .ToListAsync();
             }
 
