@@ -38,6 +38,11 @@ namespace JapaneseCarpartsStore
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+            //Seed Database
+            JapaneseCarpartsStore.Data.DbInitializer.Seed(app);
+
+
             app.Run();
         }
     }
