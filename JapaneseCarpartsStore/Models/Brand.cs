@@ -12,7 +12,7 @@ namespace JapaneseCarpartsStore.Models
 
         public string? ImageUrl { get; set; } //Logo
 
-        //Navigation Property: One Make has many Models
+        //Navigation Property: One Brand has many Models
         public ICollection<VehicleModel> VehicleModels { get; set; } = new List<VehicleModel>();
     }
 }
