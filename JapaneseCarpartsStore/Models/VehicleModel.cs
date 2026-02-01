@@ -17,6 +17,8 @@ namespace JapaneseCarpartsStore.Models
         [Range(1900, 2100)]
         public int YearEnd { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         //Foreign Key for Brand
         public int BrandId { get; set; }
 
