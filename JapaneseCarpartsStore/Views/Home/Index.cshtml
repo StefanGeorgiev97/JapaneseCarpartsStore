@@ -1,8 +1,72 @@
-﻿@{
+﻿@model JapaneseCarpartsStore.Models.HomeIndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-5">
+    <h1 class="display-4">Japanese Car Parts Store</h1>
+    <p>Select your vehicle to find parts.</p>
 </div>
+
+<!-- Search Section -->
+<div class="card p-4 mb-4 shadow-sm">
+    <form method="get" asp-action="Index" id="searchForm">
+        <div class="row">
+            <div class="col-md-5">
+                <label class="form-label">1. Select Brand</label>
+                <select asp-for="SelectedBrandId" asp-items="Model.Brands" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Choose Brand --</option>
+                </select>
+            </div>
+
+            <div class="col-md-5">
+                <label class="form-label">2. Select Model</label>
+                <select asp-for="SelectedModelId" asp-items="Model.VehicleModels" class="form-select" onchange="this.form.submit()" disabled="@(Model.VehicleModels == null)">
+                    <option value="">-- Choose Model --</option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <a asp-action="Index" class="btn btn-secondary w-100">Reset</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Car Image Display-->
+@if (ViewData["SelectedModelImage"] != null)
+{
+    <div class="text-center mb-4">
+        <h3 class="text-muted">You selected: @ViewData["SelectedModelName"]</h3>
+        <img src="@ViewData["SelectedModelImage"]" alt="Selected Car" class="img-fluid rounded shadow" style="max-height: 300px;" />
+    </div>
+}
+
+<!-- Results Section -->
+@if (Model.Parts.Any())
+{
+    <h3 class="mb-3">Available Parts</h3>
+    <div class="row">
+        @foreach (var part in Model.Parts)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@part.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@part.Category</h6>
+                        <p class="card-text">@part.Description</p>
+                        <h4 class="text-primary">$@part.Price</h4>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success w-100">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (Model.SelectedModelId.HasValue)
+{
+    <div class="alert alert-warning">No parts found for this model yet.</div>
+}
