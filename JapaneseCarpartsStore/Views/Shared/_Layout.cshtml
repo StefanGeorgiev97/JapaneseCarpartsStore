@@ -18,12 +18,22 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <!-- Main Menu -->
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+
+                    <!-- Right Side Menu (Admin) -->
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger btn-sm" asp-area="" asp-controller="Admin" asp-action="Index">
+                                <i class="bi bi-gear-fill"></i> Admin Panel
+                            </a>
                         </li>
                     </ul>
                 </div>
