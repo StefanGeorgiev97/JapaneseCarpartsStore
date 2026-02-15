@@ -138,5 +138,41 @@ namespace JapaneseCarpartsStore.Controllers
         {
             return _context.Parts.Any(e => e.Id == id);
         }
+
+        // GET: Admin/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var part = await _context.Parts
+                .Include(p => p.VehicleModel)
+                .ThenInclude(vm => vm.Brand)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (part == null)
+            {
+                return NotFound();
+            }
+
+            return View(part);
+        }
+
+        // POST: Admin/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var part = await _context.Parts.FindAsync(id);
+            if (part != null)
+            {
+                _context.Parts.Remove(part);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
