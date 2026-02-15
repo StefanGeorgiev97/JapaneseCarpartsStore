@@ -53,19 +53,47 @@ namespace JapaneseCarpartsStore.Data
                 var parts = new List<Part>
                 {
                     //Civic Parts
-                    new Part { Name = "Front Bumper", Description = "Primed front bumper cover", Price = 150.00m, Category = PartCategory.Body, VehicleModelId = models[0].Id },
-                    new Part { Name = "Alternator", Description = "12V 100Amp Alternator", Price = 120.50m, Category = PartCategory.Mechanical, VehicleModelId = models[0].Id },
-                    new Part { Name = "Radiator", Description = "Aluminum Core Radiator", Price = 85.99m, Category = PartCategory.Cooling, VehicleModelId = models[0].Id },
+                    new Part { Name = "Front Bumper", Description = "Primed front bumper cover", Price = 150.00m, Category = PartCategory.Body, VehicleModelId = models[0].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=7282002&m=0&n=0&lng=de&rev=94077991" },
+                    new Part { Name = "Alternator", Description = "12V 100Amp Alternator", Price = 120.50m, Category = PartCategory.Mechanical, VehicleModelId = models[0].Id, ImageUrl = "https://www.tarostrade.at/img/categories/file_682653_1582621197.jpg"},
+                    new Part { Name = "Radiator", Description = "Aluminum core radiator", Price = 85.99m, Category = PartCategory.Cooling, VehicleModelId = models[0].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=7022938&m=0&n=0&lng=de&rev=94077991"},
+
+                    //Accord Parts
+                    new Part {Name = "Wheel Bearing Set", Description = "Left rear axle bearing set", Price = 46.00m, Category = PartCategory.Mechanical, VehicleModelId = models[1].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=13563741&m=0&n=1&lng=de&rev=94077991"},
+                    new Part {Name = "Hood Lock", Description = "Hood lock", Price = 11.49m, Category = PartCategory.Body, VehicleModelId = models[1].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=16916186&m=0&n=0&lng=de&rev=94077991"},
+                    new Part {Name = "Suspension Arm", Description = "Front axle right suspension arm", Price = 41.00m, Category = PartCategory.Mechanical, VehicleModelId = models[1].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=8197767&m=0&n=2&lng=de&rev=94077991"},
+
+                    //CR-V Parts
+                    new Part {Name = "Front Fender", Description = "Front right fender with moulding holes", Price = 38.49m, Category = PartCategory.Body, VehicleModelId = models[2].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=7476548&m=0&n=0&lng=de&rev=94077991"},
+                    new Part {Name = "Trunk Spring", Description = "Gas spring set for the trunk", Price = 29.99m, Category = PartCategory.Body, VehicleModelId = models[2].Id, ImageUrl = "https://cdn.autodoc.de/thumb?dynamic=generic_icons&name=219&mode=5"},
+                    new Part {Name = "Door Moulding Clip", Description = "Door moulding clips set", Price = 4.30m, Category = PartCategory.Interior, VehicleModelId = models[2].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=23694743&m=0&n=0&lng=de&rev=94077991"},
             
                     //Corolla Hatchback Parts
-                    new Part { Name = "Headlight Assembly", Description = "Xenon Headlight Right Side", Price = 200.00m, Category = PartCategory.Body, VehicleModelId = models[3].Id },
-                    new Part { Name = "Brake Pads", Description = "Front Brake Pads", Price = 45.00m, Category = PartCategory.Mechanical, VehicleModelId = models[3].Id },
-                    new Part { Name = "Water Pump", Description = "Engine Water Pump with Gasket", Price = 60.00m, Category = PartCategory.Cooling, VehicleModelId = models[3].Id },
+                    new Part { Name = "Headlight Assembly", Description = "Xenon Headlight right side", Price = 200.00m, Category = PartCategory.Body, VehicleModelId = models[3].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=14123680&m=0&n=1&lng=en&rev=94077991"},
+                    new Part { Name = "Brake Pads", Description = "Front brake pads", Price = 45.00m, Category = PartCategory.Mechanical, VehicleModelId = models[3].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=8043074&m=0&n=1&lng=de&rev=94077991" },
+                    new Part { Name = "Water Pump", Description = "Engine water pump with gasket", Price = 60.00m, Category = PartCategory.Cooling, VehicleModelId = models[3].Id, ImageUrl = "https://media.autodoc.de/360_photos/8095284/h-preview.jpg" },
 
-                    //Mazda 3 Parts (Using index 6 for Mazda 3 Hatchback)
-                    new Part { Name = "Fender", Description = "Galvanized Front Left Fender", Price = 160.00m, Category = PartCategory.Body, VehicleModelId = models[6].Id },
-                    new Part { Name = "Mirror", Description = "Exterior Right Heated Mirror", Price = 125.00m, Category = PartCategory.Body, VehicleModelId = models[6].Id},
-                    new Part { Name = "Clutch", Description = "Clutch for 6-Speed Manual Transmission", Price = 199.00m, Category = PartCategory.Mechanical, VehicleModelId = models[6].Id}
+                    //Hilux Parts
+                    new Part {Name = "Radiator", Description = "Aluminum core radiator", Price = 200.00m, Category = PartCategory.Cooling, VehicleModelId = models[4].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=1990934&m=0&n=0&lng=de&rev=94077991"},
+                    new Part {Name = "Coolant Liquid Canister", Description = "Coolant liquid canister", Price = 25.00m, Category = PartCategory.Cooling, VehicleModelId = models[4].Id, ImageUrl = "https://media.autodoc.de/360_photos/16379030/h-preview.jpg"},
+                    new Part {Name = "Clutch Set", Description = "Clutch set", Price = 215.00m, Category = PartCategory.Mechanical, VehicleModelId = models[4].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=16158524&m=0&n=1&lng=de&rev=94077991"},
+
+                    //Mazda 3 Parts
+                    new Part { Name = "Fender", Description = "Front left fender", Price = 160.00m, Category = PartCategory.Body, VehicleModelId = models[6].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=7047127&m=0&n=0&lng=de&rev=94077991"},
+                    new Part { Name = "Mirror", Description = "Exterior left heated mirror", Price = 125.00m, Category = PartCategory.Body, VehicleModelId = models[6].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=9305656&m=0&n=0&lng=de&rev=94077991"},
+                    new Part { Name = "Clutch", Description = "Clutch for 6-Speed Manual Transmission", Price = 199.00m, Category = PartCategory.Mechanical, VehicleModelId = models[6].Id, ImageUrl = "https://media.autodoc.de/360_photos/1219795/h-preview.jpg"},
+
+                    //Mazda 6 Parts
+                    new Part { Name = "Rear Bumper", Description = "Primed rear bumper", Price = 350.00m, Category = PartCategory.Body, VehicleModelId = models[7].Id, ImageUrl ="https://cdn.autodoc.de/thumb?id=9914108&m=0&n=1&lng=de&rev=94077991" },
+                    new Part { Name = "Steering Rack", Description = "Mechanical steering rach for LHD models", Price = 232.00m, Category = PartCategory.Mechanical, VehicleModelId = models[7].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=16668268&m=0&n=0&lng=de&rev=94077991"},
+                    new Part { Name = "Rear Light", Description = "LED left rear light - outer part", Price = 320.50m, Category = PartCategory.Body, VehicleModelId = models[7].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=19205335&m=0&n=0&lng=de&rev=94077991"},
+
+                    //Miata MX-5 Parts
+                    new Part { Name = "Front Fender", Description = "Front right fender with bilnker hole", Price = 165.00m, Category = PartCategory.Body, VehicleModelId = models[8].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=10079260&m=0&n=0&lng=en&rev=94077991"},
+                    new Part { Name = "Front Bumper", Description = "Primed front bumper", Price = 380.00m, Category = PartCategory.Body, VehicleModelId = models[8].Id, ImageUrl = "https://cdn.autodoc.de/thumb?id=15368490&m=0&n=0&lng=de&rev=94077991"},
+                    new Part { Name = "Hood", Description = "Aluminum hood", Price = 450.00m, Category = PartCategory.Body, VehicleModelId = models[8].Id, ImageUrl = "https://cdn.autodoc.de/thumb?dynamic=generic_icons&name=531&mode=5"}
+
+
+
                 };
 
                 context.Parts.AddRange(parts);
