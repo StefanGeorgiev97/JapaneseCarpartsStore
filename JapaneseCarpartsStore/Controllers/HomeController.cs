@@ -40,24 +40,43 @@ namespace JapaneseCarpartsStore.Controllers
                     .ToListAsync();
 
                 viewModel.VehicleModels = new SelectList(models, "Id", "DisplayText", selectedModelId);
+
+                var selectedBrand = await _context.Brands.FindAsync(selectedBrandId.Value);
+                if (selectedBrand != null)
+                {
+                    ViewData["SelectedBrandImage"] = selectedBrand.ImageUrl;
+                    ViewData["SelectedBrandName"] = selectedBrand.Name;
+                }
             }
 
             // 3 - If a Model is selected, load its Parts and Image
             if (selectedModelId.HasValue)
             {
                 var selectedModel = await _context.VehicleModels.FindAsync(selectedModelId.Value);
+
+                //Check if the selected model actually belongs to the selected brand?
+                if (selectedModel != null && selectedBrandId.HasValue && selectedModel.BrandId != selectedBrandId.Value)
+                {
+                    //Reset the model selection because it's invalid for this brand
+                    selectedModel = null;
+                    selectedModelId = null;
+
+                    //Clear the dropdown selection in the ViewModel too
+                    viewModel.SelectedModelId = null;
+                }
+
+                //Only proceed if the model is valid and matches the brand
                 if (selectedModel != null)
                 {
                     ViewData["SelectedModelImage"] = selectedModel.ImageUrl;
                     ViewData["SelectedModelName"] = selectedModel.Name;
+
+                    viewModel.Parts = await _context.Parts
+                        .Include(p => p.VehicleModel)
+                        .Where(p => p.VehicleModelId == selectedModelId.Value)
+                        .ToListAsync();
                 }
-
-                viewModel.Parts = await _context.Parts
-                    .Include(p => p.VehicleModel)
-                    .Where(p => p.VehicleModelId == selectedModelId.Value)
-                    .ToListAsync();
             }
-
             return View(viewModel);
         }
 

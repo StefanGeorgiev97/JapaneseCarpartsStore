@@ -20,9 +20,9 @@ namespace JapaneseCarpartsStore.Data
                 }
 
                 //1 - Create Brands
-                var honda = new Brand { Name = "Honda", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg" };
-                var toyota = new Brand { Name = "Toyota", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/9/9d/Toyota_carlogo.svg" };
-                var mazda = new Brand { Name = "Mazda", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/f/f9/Mazda_logo_with_emblem.svg" };
+                var honda = new Brand { Name = "Honda", ImageUrl = "https://s3.wheelsage.org/format/brand/logo/honda.png" };
+                var toyota = new Brand { Name = "Toyota", ImageUrl = "https://s3.wheelsage.org/format/brand/logo/toyota.png" };
+                var mazda = new Brand { Name = "Mazda", ImageUrl = "https://s3.wheelsage.org/format/brand/logo/mazda.png" };
 
                 context.Brands.AddRange(honda, toyota, mazda);
                 context.SaveChanges();

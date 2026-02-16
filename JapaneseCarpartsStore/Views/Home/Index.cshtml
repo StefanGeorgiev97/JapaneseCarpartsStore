@@ -34,6 +34,13 @@
     </form>
 </div>
 
+<!--Brand Logo (Shows as soon as Brand is picked) -->
+@if (ViewData["SelectedBrandImage"] != null)
+{
+    <div class="mb-3">
+        <img src="@ViewData["SelectedBrandImage"]" alt="Brand Logo" style="height: 80px; object-fit: contain;" />
+    </div>
+}
 <!-- Car Image Display-->
 @if (ViewData["SelectedModelImage"] != null)
 {
