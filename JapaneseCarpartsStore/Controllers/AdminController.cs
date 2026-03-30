@@ -9,12 +9,12 @@ namespace JapaneseCarpartsStore.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IPartService _partService; // Add this line
+        private readonly IPartService _partService;
 
         public AdminController(ApplicationDbContext context, IPartService partService) // Update this line
         {
             _context = context;
-            _partService = partService; // Update this line
+            _partService = partService;
         }
 
         //GET: Admin/Index
