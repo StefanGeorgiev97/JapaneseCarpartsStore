@@ -1,3 +1,5 @@
+using JapaneseCarpartsStore.Core.Contracts;
+using JapaneseCarpartsStore.Core.Services;
 using JapaneseCarpartsStore.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,8 @@ namespace JapaneseCarpartsStore
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IPartService, PartService>();
 
             var app = builder.Build();
 

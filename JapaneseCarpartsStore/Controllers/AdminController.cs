@@ -1,4 +1,5 @@
-﻿using JapaneseCarpartsStore.Data;
+﻿using JapaneseCarpartsStore.Core.Contracts;
+using JapaneseCarpartsStore.Data;
 using JapaneseCarpartsStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,21 +9,19 @@ namespace JapaneseCarpartsStore.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPartService _partService; // Add this line
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, IPartService partService) // Update this line
         {
             _context = context;
+            _partService = partService; // Update this line
         }
 
         //GET: Admin/Index
         public async Task<IActionResult> Index()
         {
-            //We include VehicleModel and Brand so we can show the brand and model next to the part name
-            var parts = await _context.Parts
-                .Include(p => p.VehicleModel)
-                .ThenInclude(vm => vm.Brand)
-                .ToListAsync();
-
+            // Using the service instead of _context
+            var parts = await _partService.GetAllPartsAsync();
             return View(parts);
         }
         //GET: Admin/Create
