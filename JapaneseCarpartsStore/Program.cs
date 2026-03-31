@@ -1,7 +1,10 @@
 using JapaneseCarpartsStore.Core.Contracts;
 using JapaneseCarpartsStore.Core.Services;
 using JapaneseCarpartsStore.Data;
+using JapaneseCarpartsStore.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace JapaneseCarpartsStore
 {
@@ -22,7 +25,29 @@ namespace JapaneseCarpartsStore
 
             builder.Services.AddScoped<IPartService, PartService>();
 
+            // Identity Configuration
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // 2. Add controllers with views (ensure this is below your Identity code)
+            builder.Services.AddControllersWithViews();
+
             var app = builder.Build();
+
+            // Seed roles and admin user
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                IdentitySeeder.SeedAdminAsync(services).GetAwaiter().GetResult();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -35,8 +60,11 @@ namespace JapaneseCarpartsStore
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication(); // To check passwords
 
             app.UseAuthorization();
+
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

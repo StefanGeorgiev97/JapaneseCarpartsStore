@@ -1,11 +1,13 @@
 ﻿using JapaneseCarpartsStore.Core.Contracts;
 using JapaneseCarpartsStore.Data;
 using JapaneseCarpartsStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JapaneseCarpartsStore.Controllers
 {
+    [Authorize(Roles = "Administrator")] // Only users with Administrator role can access
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
