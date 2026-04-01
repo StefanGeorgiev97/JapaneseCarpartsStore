@@ -14,12 +14,21 @@ namespace JapaneseCarpartsStore.Core.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Part>> GetAllPartsAsync()
+        public async Task<IEnumerable<Part>> GetAllPartsAsync(string? searchTerm = null)
         {
-            return await _context.Parts
+            var query = _context.Parts
                 .Include(p => p.VehicleModel)
                     .ThenInclude(vm => vm.Brand)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string normalizedSearch = searchTerm.ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(normalizedSearch) ||
+                                        p.Description.ToLower().Contains(normalizedSearch));
+            }
+
+            return await query.ToListAsync();
         }
     }
 }

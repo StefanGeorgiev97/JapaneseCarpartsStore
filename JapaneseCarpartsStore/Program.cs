@@ -67,9 +67,12 @@ namespace JapaneseCarpartsStore
             app.MapRazorPages();
 
             app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
             //Seed Database
             JapaneseCarpartsStore.Data.DbInitializer.Seed(app);

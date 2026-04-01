@@ -5,15 +5,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace JapaneseCarpartsStore.Controllers
+namespace JapaneseCarpartsStore.Areas.Admin.Controllers
+
 {
+    [Area("Admin")]
     [Authorize(Roles = "Administrator")] // Only users with Administrator role can access
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IPartService _partService;
 
-        public AdminController(ApplicationDbContext context, IPartService partService) // Update this line
+        public AdminController(ApplicationDbContext context, IPartService partService)
         {
             _context = context;
             _partService = partService;
@@ -34,7 +36,7 @@ namespace JapaneseCarpartsStore.Controllers
             ViewData["VehicleModelId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
                 _context.VehicleModels.Include(m => m.Brand)
                 .Select(m => new {
-                    Id = m.Id,
+                    m.Id,
                     DisplayText = $"{m.Brand.Name} {m.Name} ({m.YearStart}-{m.YearEnd})"
                 }),
                 "Id", "DisplayText");
@@ -58,7 +60,7 @@ namespace JapaneseCarpartsStore.Controllers
             ViewData["VehicleModelId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
                 _context.VehicleModels.Include(m => m.Brand)
                 .Select(m => new {
-                    Id = m.Id,
+                    m.Id,
                     DisplayText = $"{m.Brand.Name} {m.Name} ({m.YearStart}-{m.YearEnd})"
                 }),
                 "Id", "DisplayText", part.VehicleModelId);
@@ -83,7 +85,7 @@ namespace JapaneseCarpartsStore.Controllers
             ViewData["VehicleModelId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
                 _context.VehicleModels.Include(m => m.Brand)
                 .Select(m => new {
-                    Id = m.Id,
+                    m.Id,
                     DisplayText = $"{m.Brand.Name} {m.Name} ({m.YearStart}-{m.YearEnd})"
                 }),
                 "Id", "DisplayText", part.VehicleModelId);
@@ -126,7 +128,7 @@ namespace JapaneseCarpartsStore.Controllers
             ViewData["VehicleModelId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
                 _context.VehicleModels.Include(m => m.Brand)
                 .Select(m => new {
-                    Id = m.Id,
+                    m.Id,
                     DisplayText = $"{m.Brand.Name} {m.Name} ({m.YearStart}-{m.YearEnd})"
                 }),
                 "Id", "DisplayText", part.VehicleModelId);
