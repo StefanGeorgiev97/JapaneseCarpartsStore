@@ -1,9 +1,11 @@
-﻿using JapaneseCarpartsStore.Models;
+﻿using JapaneseCarpartsStore.Core.ViewModels;
+using JapaneseCarpartsStore.Models;
 
 namespace JapaneseCarpartsStore.Core.Contracts
 {
     public interface IPartService
     {
-        Task<IEnumerable<Part>> GetAllPartsAsync(string? searchTerm = null); // Updated for search function
+        // Returns model containing count and filtered list
+        Task<AllPartsQueryModel> GetAllPartsAsync(string? searchTerm = null, int currentPage = 1, int partsPerPage = 6);
     }
 }

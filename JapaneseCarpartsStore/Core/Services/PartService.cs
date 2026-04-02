@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JapaneseCarpartsStore.Core.Contracts;
+using JapaneseCarpartsStore.Core.ViewModels;
 using JapaneseCarpartsStore.Data;
 using JapaneseCarpartsStore.Models;
-using JapaneseCarpartsStore.Core.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace JapaneseCarpartsStore.Core.Services
 {
@@ -14,21 +15,45 @@ namespace JapaneseCarpartsStore.Core.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Part>> GetAllPartsAsync(string? searchTerm = null)
+        public async Task<AllPartsQueryModel> GetAllPartsAsync(string? searchTerm = null, int currentPage = 1, int partsPerPage = 6)
         {
-            var query = _context.Parts
-                .Include(p => p.VehicleModel)
-                    .ThenInclude(vm => vm.Brand)
-                .AsQueryable();
+            var partsQuery = _context.Parts.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                string normalizedSearch = searchTerm.ToLower();
-                query = query.Where(p => p.Name.ToLower().Contains(normalizedSearch) ||
-                                        p.Description.ToLower().Contains(normalizedSearch));
+                partsQuery = partsQuery.Where(p =>
+                    p.Name.Contains(searchTerm) ||
+                    p.Description.Contains(searchTerm) ||
+                    p.VehicleModel.Name.Contains(searchTerm));
             }
 
-            return await query.ToListAsync();
+            var totalParts = await partsQuery.CountAsync();
+
+            var parts = await partsQuery
+                .Include(p => p.VehicleModel)
+                    .ThenInclude(vm => vm.Brand)
+                .OrderByDescending(p => p.Id) // Show newest parts first
+                .Skip((currentPage - 1) * partsPerPage)
+                .Take(partsPerPage)
+                .Select(p => new PartAllViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    BrandName = p.VehicleModel.Brand.Name,
+                    ModelName = p.VehicleModel.Name
+                })
+                .ToListAsync();
+
+            return new AllPartsQueryModel
+            {
+                TotalPartsCount = totalParts,
+                Parts = parts,
+                SearchTerm = searchTerm,
+                CurrentPage = currentPage
+            };
         }
     }
 }
