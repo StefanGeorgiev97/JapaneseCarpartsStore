@@ -19,7 +19,7 @@ namespace JapaneseCarpartsStore
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddControllersWithViews();
-
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -36,8 +36,7 @@ namespace JapaneseCarpartsStore
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            // 2. Add controllers with views (ensure this is below your Identity code)
+          
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
