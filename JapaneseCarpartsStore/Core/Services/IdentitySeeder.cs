@@ -28,7 +28,7 @@ namespace JapaneseCarpartsStore.Core.Services
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(admin, "Admin123!"); // Change this password later
+                await userManager.CreateAsync(admin, "Admin123!"); // Stays as is for now
                 await userManager.AddToRoleAsync(admin, "Administrator");
             }
         }
