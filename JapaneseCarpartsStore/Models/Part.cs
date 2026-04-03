@@ -34,5 +34,7 @@ namespace JapaneseCarpartsStore.Models
 
         [ForeignKey(nameof(VehicleModelId))]
         public VehicleModel? VehicleModel { get; set; }
+
+        public PartCategory Category { get; set; }
     }
 }
