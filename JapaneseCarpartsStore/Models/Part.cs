@@ -15,23 +15,21 @@ namespace JapaneseCarpartsStore.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public required string Name { get; set; } //Radiator, Bumper, Headlamp
+        [Required(ErrorMessage = "Part name is mandatory.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 100 characters.")]
+        public required string Name { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(1000, MinimumLength = 10, ErrorMessage = "Description is too short.")]
         public required string Description { get; set; }
 
-        [Range(0.01, 10000.00)]
+        [Range(0.01, 50000.00, ErrorMessage = "Price must be a positive value between 0.01 and 50,000.00")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
+        [Url(ErrorMessage = "Please provide a valid Image URL.")]
         public string? ImageUrl { get; set; }
 
-        public PartCategory Category { get; set; }
-
-        // Foreign Key for VehicleModel
         public int VehicleModelId { get; set; }
 
         [ForeignKey(nameof(VehicleModelId))]
