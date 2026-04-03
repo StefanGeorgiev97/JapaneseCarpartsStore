@@ -41,6 +41,17 @@ namespace JapaneseCarpartsStore
 
             var app = builder.Build();
 
+            // Error handling
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Error/500");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             // Seed roles and admin user
             using (var scope = app.Services.CreateScope())
             {
