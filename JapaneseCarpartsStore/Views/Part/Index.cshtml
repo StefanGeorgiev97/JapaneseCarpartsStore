@@ -45,6 +45,7 @@
                     <p class="card-text flex-grow-1 text-truncate" style="max-height: 50px;">@part.Description</p>
                     <div class="mt-auto">
                         <p class="h5 text-primary">@part.Price.ToString("C")</p>
+                        <a asp-action="Details" asp-route-id="@part.Id" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>
