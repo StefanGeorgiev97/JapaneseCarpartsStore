@@ -55,5 +55,15 @@ namespace JapaneseCarpartsStore.Core.Services
                 CurrentPage = currentPage
             };
         }
+
+        public async Task<Part?> GetPartDetailsAsync(int id)
+        {
+            return await _context.Parts
+                .Include(p => p.VehicleModel)
+                    .ThenInclude(vm => vm.Brand)
+                .Include(p => p.Reviews)
+                    .ThenInclude(r => r.User) // Include user so we see who reviewed it
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }
