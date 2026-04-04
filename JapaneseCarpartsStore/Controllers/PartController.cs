@@ -32,5 +32,13 @@ namespace JapaneseCarpartsStore.Controllers
 
             return View(query);
         }
+
+        // Details for public viewing
+        public async Task<IActionResult> Details(int id)
+        {
+            var part = await _partService.GetPartDetailsAsync(id);
+            if (part == null) return RedirectToAction("Error404", "Error");
+            return View(part);
+        }
     }
 }

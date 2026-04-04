@@ -1,0 +1,26 @@
+﻿@model IEnumerable<JapaneseCarpartsStore.Models.Review>
+
+<div class="mt-5">
+    <h4>Customer Feedback</h4>
+    <hr />
+    @if (!Model.Any())
+    {
+        <p class="text-muted">No reviews yet for this performance part.</p>
+    }
+    else
+    {
+        @foreach (var review in Model)
+        {
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span class="badge bg-warning text-dark">Rating: @review.Rating/5</span>
+                        <small class="text-muted">@review.CreatedOn.ToShortDateString()</small>
+                    </div>
+                    <p class="mt-2">@review.Comment</p>
+                    <footer class="blockquote-footer">Reviewed by @(review.User?.UserName ?? "Anonymous")</footer>
+                </div>
+            </div>
+        }
+    }
+</div>
