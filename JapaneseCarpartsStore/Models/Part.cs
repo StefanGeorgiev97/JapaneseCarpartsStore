@@ -36,5 +36,7 @@ namespace JapaneseCarpartsStore.Models
         public VehicleModel? VehicleModel { get; set; }
 
         public PartCategory Category { get; set; }
+
+        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

@@ -14,6 +14,7 @@ namespace JapaneseCarpartsStore.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<VehicleModel> VehicleModels { get; set; }
         public DbSet<Part> Parts { get; set; }
+        public DbSet<Review> Reviews { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
