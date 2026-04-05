@@ -10,6 +10,14 @@
             <p class="lead">Brand: @Model.VehicleModel?.Brand?.Name</p>
             <h3 class="text-primary">@Model.Price.ToString("C")</h3>
             <p>@Model.Description</p>
+            <div class="mt-4 mb-4">
+                @* Sends the Part ID to the new CartController *@
+                <form asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id" method="post">
+                    <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm">
+                        <i class="bi bi-cart-plus"></i> Add to Shopping Cart
+                    </button>
+                </form>
+            </div>
             <a asp-action="Index" class="btn btn-secondary">Back</a>
         </div>
     </div>
