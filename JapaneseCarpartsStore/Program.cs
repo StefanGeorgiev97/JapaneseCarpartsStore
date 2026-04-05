@@ -39,6 +39,8 @@ namespace JapaneseCarpartsStore
           
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<IOrderService, OrderService>();
+
             var app = builder.Build();
 
             // Error handling
