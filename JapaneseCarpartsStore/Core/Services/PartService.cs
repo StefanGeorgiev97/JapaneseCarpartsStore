@@ -65,5 +65,14 @@ namespace JapaneseCarpartsStore.Core.Services
                     .ThenInclude(r => r.User) // Include user so we see who reviewed it
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<IEnumerable<Part>> GetPartsByIdsAsync(IEnumerable<int> ids)
+        {
+            return await _context.Parts
+                .Where(p => ids.Contains(p.Id))
+                .Include(p => p.VehicleModel)
+                .ThenInclude(vm => vm.Brand)
+                .ToListAsync();
+        }
     }
 }
