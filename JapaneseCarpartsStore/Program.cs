@@ -4,6 +4,8 @@ using JapaneseCarpartsStore.Data;
 using JapaneseCarpartsStore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 
 namespace JapaneseCarpartsStore
@@ -44,6 +46,16 @@ namespace JapaneseCarpartsStore
             builder.Services.AddSession();
 
             var app = builder.Build();
+
+
+            // Handle globalization
+            var supportedCultures = new[] { new CultureInfo("en-US") }; // standardize for Dollar
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("de-DE"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             // Error handling
             if (!app.Environment.IsDevelopment())
