@@ -30,5 +30,30 @@ namespace JapaneseCarpartsStore.Controllers
             var orders = await _orderService.GetUserOrdersAsync(userId);
             return View(orders);
         }
+
+        [HttpPost] // Use POST for "Buying" actions for security
+        public async Task<IActionResult> Complete()
+        {
+            var cartIds = HttpContext.Session.Get<List<int>>("Cart");
+
+            if (cartIds == null || !cartIds.Any())
+            {
+                return RedirectToAction("Index", "Part");
+            }
+
+            var userId = _userManager.GetUserId(User);
+
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+
+            await _orderService.CreateOrderAsync(userId, cartIds);
+
+            // Empty the cart after successful purchase
+            HttpContext.Session.Remove("Cart");
+
+            return RedirectToAction(nameof(MyOrders));
+        }
     }
 }
