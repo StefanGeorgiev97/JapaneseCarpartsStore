@@ -9,5 +9,7 @@ namespace JapaneseCarpartsStore.Core.Contracts
         Task<AllPartsQueryModel> GetAllPartsAsync(string? searchTerm = null, int currentPage = 1, int partsPerPage = 6);
 
         Task<Part?> GetPartDetailsAsync(int id);
+
+        Task<IEnumerable<Part>> GetPartsByIdsAsync(IEnumerable<int> ids);
     }
 }
