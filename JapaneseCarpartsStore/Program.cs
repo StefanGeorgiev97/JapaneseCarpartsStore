@@ -41,6 +41,8 @@ namespace JapaneseCarpartsStore
 
             builder.Services.AddScoped<IOrderService, OrderService>();
 
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Error handling
@@ -70,6 +72,8 @@ namespace JapaneseCarpartsStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
             app.UseAuthentication(); // To check passwords
