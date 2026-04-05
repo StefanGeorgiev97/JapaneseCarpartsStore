@@ -24,5 +24,8 @@ namespace JapaneseCarpartsStore.Data
                 .Property(p => p.Price)
                 .HasPrecision(18, 2);
         }
+
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderItem> OrderItems { get; set; } = null!;
     }
 }
