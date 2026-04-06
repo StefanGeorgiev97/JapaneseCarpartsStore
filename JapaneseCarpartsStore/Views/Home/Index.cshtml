@@ -78,7 +78,9 @@
                         <h4 class="text-primary mt-3">$@part.Price</h4>
                     </div>
                     <div class="card-footer bg-white border-top-0">
-                        <button class="btn btn-success w-100">Add to Cart</button>
+                        <form asp-controller="Cart" asp-action="Add" asp-route-id="@part.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-success w-100">Add to Cart</button>
+                        </form>
                         <a asp-controller="Part" asp-action="Details" asp-route-id="@part.Id" class="btn btn-primary">Details</a>
                     </div>
                 </div>
