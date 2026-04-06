@@ -21,7 +21,32 @@
             <a asp-action="Index" class="btn btn-secondary">Back</a>
         </div>
     </div>
-
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <div class="card p-3 mb-4 shadow-sm bg-light">
+            <h5>Leave a Review</h5>
+            <form asp-action="LeaveReview" asp-route-id="@Model.Id" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Rating</label>
+                    <select name="rating" class="form-select">
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <textarea name="comment" class="form-control" rows="3" placeholder="Share your experience..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p class="alert alert-secondary">Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to leave a review.</p>
+    }
     @* Call the partial here *@
     <partial name="_ReviewsPartial" model="Model.Reviews" />
 </div>
