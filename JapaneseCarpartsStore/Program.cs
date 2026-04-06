@@ -48,6 +48,8 @@ namespace JapaneseCarpartsStore
             var app = builder.Build();
 
 
+            
+
             // Handle globalization
             var supportedCultures = new[] { new CultureInfo("en-US") }; // standardize for Dollar
             app.UseRequestLocalization(new RequestLocalizationOptions
@@ -103,8 +105,16 @@ namespace JapaneseCarpartsStore
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             //Seed Database
-            JapaneseCarpartsStore.Data.DbInitializer.Seed(app);
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<JapaneseCarpartsStore.Data.ApplicationDbContext>();
+
+                JapaneseCarpartsStore.Data.DbInitializer.SeedAsync(context).GetAwaiter().GetResult();
+
+                JapaneseCarpartsStore.Core.Services.IdentitySeeder.SeedAdminAsync(services).GetAwaiter().GetResult();
+            }
 
             app.Run();
         }

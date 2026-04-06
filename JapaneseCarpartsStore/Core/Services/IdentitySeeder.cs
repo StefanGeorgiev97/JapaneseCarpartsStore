@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using JapaneseCarpartsStore.Models;
+﻿using JapaneseCarpartsStore.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JapaneseCarpartsStore.Core.Services
 {
@@ -11,13 +11,11 @@ namespace JapaneseCarpartsStore.Core.Services
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            // Create the Administrator Role if it doesn't exist
             if (!await roleManager.RoleExistsAsync("Administrator"))
             {
                 await roleManager.CreateAsync(new IdentityRole("Administrator"));
             }
 
-            // Create the default Admin User
             string adminEmail = "admin@store.com";
             if (await userManager.FindByEmailAsync(adminEmail) == null)
             {
@@ -28,7 +26,7 @@ namespace JapaneseCarpartsStore.Core.Services
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(admin, "Admin123!"); // Stays as is for now
+                await userManager.CreateAsync(admin, "Admin123!");
                 await userManager.AddToRoleAsync(admin, "Administrator");
             }
         }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JapaneseCarpartsStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260405155845_AddOrderSystem")]
-    partial class AddOrderSystem
+    [Migration("20260406112238_Initial_Advanced_Final")]
+    partial class Initial_Advanced_Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
