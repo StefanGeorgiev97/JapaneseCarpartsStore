@@ -1,52 +1,53 @@
-# Japanese Car Parts Store
+# Japanese Car Parts Store - ASP.NET Advanced Project
 
-This is my project for the ASP.NET Fundamentals Jan. 2026. It's a web application where users can find parts for specific Japanese cars (Honda, Toyota, Mazda).
+This application is an e-commerce platform for Japanese car parts. It is developed as the final assignment for the **ASP.NET Advanced** course. The project focuses on a structured backend with role-based access and data persistence.
 
-I built this because I wanted to create a system where you don't just see a giant list of parts—you first pick your car (Brand and Model), and then the site shows you exactly what fits.
+##  Project Structure
+The application is organized into multiple layers to separate the user interface from the underlying data logic:
 
-## How It Works
+*   **Service Layer:** Business logic is located in the `Core` folder. Services like `PartService` and `OrderService` handle data processing and are called by controllers through interfaces (`IPartService`, `IOrderService`).
+*   **Dependency Injection:** Built-in .NET dependency injection is used to manage service lifetimes and maintain a decoupled codebase.
+*   **MVC Areas:** The application uses a dedicated `Admin` area for database management, separating administration tools from the public storefront.
+*   **Data Models & ViewModels:** To protect the database schema, data is passed to the views using specific ViewModels (DTOs) rather than raw entities.
 
-### For Users (Public Side)
-*   **Select a Car:** You can pick a Brand (like Honda) and then a specific Model (like Civic).
-*   **See the Car:** Once you pick a model, I added a feature where the image of that specific car generation shows up so you know you picked the right one.
-*   **Buy Parts:** You can see the list of parts (Body, Mechanical, Cooling, etc.) available for that car.
+##  Key Functional Features
+### Catalog and Search
+- **Product Gallery:** Features a responsive list of parts with server-side pagination to manage load times.
+- **Search Logic:** Includes a filtering system that queries by part name, brand, or description.
+- **Product Details:** Provides an individual page for each item with specifications, images, and user reviews.
 
-### For Admins (Private Side)
-*   **Admin Panel:** I created a separate area for managing the data.
-*   **Add New Parts:** You can add parts to the database, set their price, and paste an image URL.
-*   **Manage Inventory:** You can Edit or Delete parts if the price changes or if there is a mistake.
-*   **Validation:** The forms check if you missed a required field (like Price or Name) before saving.
+### Shopping and Orders
+- **Shopping Cart:** Utilizes Session state to track items added to a user's cart before checkout.
+- **Order Management:** When a purchase is completed, an Order and multiple OrderItems are stored in the database, preserving a history of the price at the time of purchase.
+- **Review System:** Logged-in users can submit star ratings and comments on specific parts, which are displayed on the product details page.
 
-## Tools I Used
-*   **ASP.NET Core MVC (.NET 8):** The main framework.
-*   **Entity Framework Core:** To handle the database and relationships between Brands, Models, and Parts.
-*   **SQL Server:** I used LocalDB for development.
-*   **Bootstrap 5:** For the layout and responsive design.
+### Security and Identity
+- **User Roles:** Uses the ASP.NET Identity system with two distinct roles: `Administrator` and `User`.
+- **Access Control:** The `[Authorize]` attribute is used to restrict the Admin Panel to administrators and ensure only registered users can view their order history or post reviews.
+- **Data Validation:** Implements Data Annotations for both client-side (jQuery) and server-side (ModelState) validation to ensure data integrity.
 
-## How to Run This Project
+##  Technical Specifications
+- **7 Controllers:** Home, Part, Admin (Area), Error, Identity, Order, and Cart.
+- **7 Database Entities:** Part, Brand, VehicleModel, ApplicationUser, Review, Order, and OrderItem.
+- **Localization:** Configured in `Program.cs` to use `en-US` culture for consistent **USD ($)** and decimal formatting.
 
-1.  **Clone the repo:** Download the files to your computer.
-2.  **Check the Database Connection:**
-    *   Go to `appsettings.json`.
-    *   I used `(localdb)\mssqllocaldb`. If you are using SQL Express, you might need to change the connection string.
-3.  **Create the Database:**
-    *   Open Visual Studio.
-    *   Go to **Tools** -> **NuGet Package Manager** -> **Package Manager Console**.
-    *   Run the command: `Update-Database`
-4.  **Run the App:**
-    *   Press **F5**.
-    *   **Note:** When you run it for the first time, the app will automatically fill the database with the 3 brands (Honda, Toyota, Mazda) and enough sample parts so you don't have to type them in manually.
+##  Testing and Validation
+The project includes a separate NUnit 3 test project (`JapaneseCarpartsStore.Tests`) focused on validating the business logic in the Service layer.
+*   **Frameworks:** Uses **Moq** for object mocking and an **Entity Framework Core In-Memory Database** to test database operations without a physical SQL instance.
+*   **Scope:** Logic tests cover 65%+ of the code in the Services folder, ensuring critical methods like searching and retrieval are reliable.
 
-## Known Issues & Future Plans
+##  Local Setup
+1. Clone the repository and open the solution in **Visual Studio 2022**.
+2. Configure the `DefaultConnection` in `appsettings.json` if required.
+3. Open the Package Manager Console and execute **`Update-Database`**.
+4. Launch the application (F5).
 
-Since this is a course project, there are a few things I want to improve later:
-*   **Search bar:** The future version of the project will include a search bar.
-*   **Images:** Currently, I use image URLs from the internet. In the future, I want to add file uploading so images are saved on the server.
-*   **Admin:** The admin panel has to be greatly improved upon by adding the ability to create and remove vehicle models as well as entire brands.
-*   **User experience:** Since the part list and overall number of brands and models will be expanded, the way parts will be displayed will be broken down into seperate categories for a more user-friendly experience.
-*   **User Accounts:** Right now, the Admin panel is open. I plan to add ASP.NET Identity later to secure it with a login screen. Regular users will also be able to have accounts and the admins will be able to edit their accounts (add or remove discounts, fix invoices)
-*   **Shopping Cart:** I want to add a real cart and checkout process in the next version.
-*   **Languages:** I also want to add one or two more languages for the site - starting with german.
+On the first run, the database is automatically seeded with several brands, corresponding car models and various performance parts.
 
-## License
-This is an educational project.
+**Default Administrator Account:**
+- **Email:** `admin@store.com`
+- **Password:** `Admin123!`
+
+---
+**Author:** Stefan Georgiev @StefanGeorgiev97
+**Course:** SoftUni ASP.NET Advanced February 2026
