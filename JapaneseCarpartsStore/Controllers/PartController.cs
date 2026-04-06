@@ -1,16 +1,21 @@
 ﻿using JapaneseCarpartsStore.Core.Contracts;
 using JapaneseCarpartsStore.Core.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using JapaneseCarpartsStore.Models;
 
 namespace JapaneseCarpartsStore.Controllers
 {
     public class PartController : Controller
     {
         private readonly IPartService _partService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PartController(IPartService partService)
+        public PartController(IPartService partService, UserManager<ApplicationUser> userManager)
         {
             _partService = partService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -39,6 +44,18 @@ namespace JapaneseCarpartsStore.Controllers
             var part = await _partService.GetPartDetailsAsync(id);
             if (part == null) return RedirectToAction("Error404", "Error");
             return View(part);
+        }
+
+        [HttpPost]
+        [Authorize] // Only logged in users can leave reviews
+        public async Task<IActionResult> LeaveReview(int id, string comment, int rating)
+        {
+            var userId = _userManager.GetUserId(User);
+            if (userId == null) return Unauthorized();
+
+            await _partService.AddReviewAsync(id, userId, comment, rating);
+
+            return RedirectToAction(nameof(Details), new { id = id });
         }
     }
 }
