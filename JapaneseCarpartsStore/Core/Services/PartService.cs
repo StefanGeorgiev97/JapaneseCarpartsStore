@@ -74,5 +74,20 @@ namespace JapaneseCarpartsStore.Core.Services
                 .ThenInclude(vm => vm.Brand)
                 .ToListAsync();
         }
+
+        public async Task AddReviewAsync(int partId, string userId, string comment, int rating)
+        {
+            var review = new Review
+            {
+                PartId = partId,
+                UserId = userId,
+                Comment = comment,
+                Rating = rating,
+                CreatedOn = DateTime.UtcNow
+            };
+
+            await _context.Reviews.AddAsync(review);
+            await _context.SaveChangesAsync();
+        }
     }
 }

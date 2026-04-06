@@ -11,5 +11,7 @@ namespace JapaneseCarpartsStore.Core.Contracts
         Task<Part?> GetPartDetailsAsync(int id);
 
         Task<IEnumerable<Part>> GetPartsByIdsAsync(IEnumerable<int> ids);
+
+        Task AddReviewAsync(int partId, string userId, string comment, int rating);
     }
 }
